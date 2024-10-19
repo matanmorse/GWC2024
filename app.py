@@ -57,8 +57,8 @@ def hello():
     events_list = load_events_from_ics(calendar_name)
         
     events_on_day = find_events_on_day(events_list, target_day)
-    # available_times = find_available_times([events_list], target_day)
-    return render_template("home.html", available_times = events_list)
+    available_times = find_available_times([events_list], target_day)
+    return render_template("home.html", available_times = available_times )
 
 @app.route('/profile')
 @login_required

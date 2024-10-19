@@ -80,4 +80,6 @@ def find_available_times(all_users_events_list, target_day):
         if (current_event.end < next_event.start): #this is a free time
             available_times.append(DateTimeRange(current_event.end.time(), next_event.start.time()))
     
+    print(available_times)
+    return available_times
 
