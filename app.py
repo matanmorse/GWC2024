@@ -25,10 +25,16 @@ def template():
     env = Environment(loader=FileSystemLoader('templates'))
     template = env.get_template('template.html')
 
+    events_list = load_events_from_ics(calendar_name)
+    events_on_day = find_events_on_day(events_list, target_day)
+
+
+
     # Context data to pass into the template
     context = {
-        'title': 'My Shopping List',
-        'items': ['Milk', 'Eggs', 'Bread']
+        'title': 'Available Times',
+        'date': target_day,
+        'events': events_on_day
     }
 
     # Render the template with context and return it as the response
