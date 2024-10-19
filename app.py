@@ -45,6 +45,24 @@ target_day = datetime.date(2024, 10, 21)
 
 
 @login_required
+@app.route('/view_events')
+def view_events():
+    if isinstance(current_user, AnonymousUserMixin):
+        return render_template("home.html", available_times = [])
+    
+    calendar_name = current_user.calendar_filename
+
+    if not calendar_name:
+        return render_template("home.html", available_times = [])
+    
+        
+    available_times = load_events_from_ics(calendar_name)
+    print(available_times)
+    return render_template("view_events.html", available_times = available_times )
+
+
+
+@login_required
 @app.route('/')
 def hello():
     if isinstance(current_user, AnonymousUserMixin):
@@ -55,12 +73,9 @@ def hello():
     if not calendar_name:
         return render_template("home.html", available_times = [])
     
-    events_list = load_events_from_ics(calendar_name)
         
-    events_on_day = find_events_on_day(events_list, target_day)
-    available_times = find_available_times([events_list], target_day)
     
-    return render_template("home.html", available_times = available_times )
+    return render_template("home.html", available_times = [] )
 
 @app.route('/profile')
 @login_required

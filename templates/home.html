@@ -21,11 +21,19 @@
     </form>
 </div>
 
-{% for time in available_times %}
 
+<h3>Times you are all available! </h3>
+<table>
+    <tr>
+        <th>Start Time</th>
+        <th>End Time</th>    
+    </tr>
+    {% for time in available_times %}
+    <tr>
+        <td>{{time.end12}}</td>
+        <td>{{time.start12}}</td>
+    </tr>
+    {% endfor %}
+</table>
 
-
-<p>{{time.start}}, {{time.end}}</p>
-
-{% endfor %}
 {% endblock %}

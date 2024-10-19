@@ -34,6 +34,7 @@ def load_events_from_ics(calendar_name):
         start = start.replace(hour=(max(start.hour - 4, 0)))
         
         parsed_event = Event(start, end, summary)
+        print("append")
         events.append(parsed_event)
     
     return events
@@ -69,7 +70,7 @@ def find_available_times(all_users_events_list, target_day):
         return []
     
     all_events.reverse()
-    all_events.sort(key=lambda x: x.start) # sort events by start time
+    all_events.sort(key=lambda x: x.start.time()) # sort events by start time
     
     if (all_events[0].start.time() > time(0,0,0)):
         available_times.append(DateTimeRange(time(0,0,0), all_events[0].start.time()))
@@ -78,12 +79,16 @@ def find_available_times(all_users_events_list, target_day):
         available_times.append(DateTimeRange(all_events[-1].end.time(), time(23, 59, 59) ))
 
 
-    for i in range(len(all_events) - 1):
-        current_event = all_events[i]
-        next_event = all_events[i + 1]
-        if (current_event.end < next_event.start): #this is a free time
-            available_times.append(DateTimeRange(current_event.end.time(), next_event.start.time()))
+    current_time = time(0,0,0)
+    for event in all_events:
+        # If there's a gap between current time and event's start time, it's a free slot
+        if event.start.time() > current_time:
+            print('haa')
+            available_times.append(DateTimeRange(current_time, event.start.time()))
+        
+        # Update current time to be the max of the event's end or current time
+        current_time = max(current_time, event.end.time())
     
-    print(available_times)
+    print(str(time) for time in available_times)
     return available_times
 
