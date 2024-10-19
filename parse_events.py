@@ -13,8 +13,10 @@ def load_events_from_ics(calendar_name):
             continue
         
         start = event.get('dtstart').dt
+        start = start.replace(hour=start.hour-4)
         end = event.get('dtend').dt
-
+        end = end.replace(hour=end.hour - 4)
+       
         parsed_event = Event(start, end, summary)
         events.append(parsed_event)
     
@@ -39,13 +41,27 @@ def find_events_on_day(events_list, date):
 
 def find_available_times(all_users_events_list, target_day):
     all_users_events_on_day = []
+    available_times = []
     for event_list in all_users_events_list:
         all_users_events_on_day.append(find_events_on_day(event_list, target_day))
 
-    for event_list in all_users_events_on_day:
-        earliest_time = time(0, 0, 0)
-        latest_time = time(23, 59, 59)
+    #compose list of all lists
+    all_events = [item for sublist in all_users_events_on_day for item in sublist]
+    all_events.reverse()
+    all_events.sort(key=lambda x: x.start) # sort events by start time
+    
+    if (all_events[0].start.time() > time(0,0,0)):
+        available_times.append(DateTimeRange(time(0,0,0), all_events[0].start.time()))
+    
+    if (all_events[-1].end.time() < time(23,59,59)):
+        available_times.append(DateTimeRange(all_events[-1].end.time(), time(23, 59, 59) ))
 
-        print(latest_time > earliest_time)
+
+    for i in range(len(all_events) - 1):
+        current_event = all_events[i]
+        next_event = all_events[i + 1]
+        if (current_event.end < next_event.start): #this is a free time
+            available_times.append(DateTimeRange(current_event.end.time(), next_event.start.time()))
     
-    
+    print([str(item) for item in available_times])
+

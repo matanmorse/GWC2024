@@ -18,3 +18,6 @@ class DateTimeRange:
     def __init__(self, start, end):
         self.start = start
         self.end = end
+
+    def __str__(self):
+        return f"Start: {self.start.strftime('%I:%M %p')}, End: {self.end.strftime('%I:%M %p')}"

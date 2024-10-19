@@ -9,7 +9,7 @@ from jinja2 import *
 app = Flask(__name__)
 
 calendar_name = "test.ics"
-target_day = datetime.date(2024, 11, 21)
+target_day = datetime.date(2024, 10, 21)
 
 @app.route('/')
 def hello():
