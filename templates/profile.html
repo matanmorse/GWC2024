@@ -1,14 +1,18 @@
 {% extends "layout.html" %}
 
 {% block main %}
+<h1>
+    Welcome, {{current_user.email}}
+</h1>
 <div class="container">
-    <h2 class="mt-4">Upload a File</h2>
+    <h2 class="mt-4">Upload your calendar to get started</h2>
     <form action="/upload_calendar" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
-            <label for="file" class="form-label">Choose a file:</label>
             <input class="form-control" type="file" name="file" id="file">
         </div>
         <button type="submit" class="btn btn-primary">Upload</button>
+        <a class="button-link small-button" href="/">Back home</a>
+        <a class="btn btn-primary" href="/logout">Logout</a>
     </form>
 </div>
 

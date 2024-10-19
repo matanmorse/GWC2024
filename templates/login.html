@@ -2,7 +2,7 @@
 
 {% block main %}
 <form action="/login_user" method="POST">
-      
+    <h3>Welcome back!</h3>
     <div class="mb-3">
       <label for="email" class="form-label">Email address</label>
       <input type="email" class="form-control" id="email" name="email" required>
@@ -13,5 +13,6 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+  Don't have an account yet? <a href="/signup">Sign up!</a>
   </body>
 {% endblock %}

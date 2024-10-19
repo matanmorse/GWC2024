@@ -72,8 +72,8 @@ def find_available_times(all_users_events_list, target_day):
     all_events.reverse()
     all_events.sort(key=lambda x: x.start.time()) # sort events by start time
     
-    if (all_events[0].start.time() > time(0,0,0)):
-        available_times.append(DateTimeRange(time(0,0,0), all_events[0].start.time()))
+    # if (all_events[0].start.time() > time(0,0,0)):
+       # available_times.append(DateTimeRange(time(0,0,0), all_events[0].start.time()))
     
     if (all_events[-1].end.time() < time(23,59,59)):
         available_times.append(DateTimeRange(all_events[-1].end.time(), time(23, 59, 59) ))
@@ -88,7 +88,6 @@ def find_available_times(all_users_events_list, target_day):
         
         # Update current time to be the max of the event's end or current time
         current_time = max(current_time, event.end.time())
-    
-    print(str(time) for time in available_times)
+    available_times.sort(key=lambda x: x.start) # sort events by start time
     return available_times
 

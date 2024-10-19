@@ -2,7 +2,8 @@
 
 {% block main %}
     <form action="/add_user" method="POST">
-      
+      <h3>Welcome aboard!</h3>
+      <h6>Lets get you signed up.</h6>
         <div class="mb-3">
           <label for="email" class="form-label">Email address</label>
           <input type="email" class="form-control" id="email" name="email" required>
@@ -11,7 +12,8 @@
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary ">Submit</button>
       </form>
+      Already have an account? <a href="/login">Login.</a>
       </body>
 {% endblock %}

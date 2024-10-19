@@ -1,4 +1,42 @@
-.green {
-    color:green;
-    
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 5rem;
+}
+
+.signup-button {
+    width: 50vw;
+    height:7.5vh;
+    font-size: 20pt;
+    background-color: #71A8F8;
+    border: #71A8F8;
+    font-weight: 500;
+}
+.button-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.small-button {
+    background-color: white;
+    padding:.5rem;
+    border-radius: 5px;
+}
+.twobuttcircles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 100vw;
+    max-height: 100vh;
+    z-index: -1;
+}
+h1, h5 {
+    z-index: 10;
+}
+input {
+    width: 30vw !important;
+}
+
+button.submit {
+    background-color: #71A8F8 !important;
+    border-color: #71A8F8;
 }

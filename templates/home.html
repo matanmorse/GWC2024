@@ -2,6 +2,8 @@
 
 {% block main %}
 <div class="container mt-5">
+    <h6>Haven't uploaded a calendar yet? Go to your <a href="/profile">profile</a> to get started! </h6>
+    <h3>Make a new event!</h3>
     <form method="POST" action="/">
         <div class="mb-3">
             <label for="participant1" class="form-label">Invite up to 3 friends: </label>
@@ -23,15 +25,13 @@
 
 
 <h3>Times you are all available! </h3>
-<table>
+<table class="table table-striped">
     <tr>
-        <th>Start Time</th>
-        <th>End Time</th>    
+        <th scope="col">Start Time</th>
     </tr>
     {% for time in available_times %}
     <tr>
-        <td>{{time.end12}}</td>
-        <td>{{time.start12}}</td>
+        <td>{{time.end12}}-{{time.start12}}</td>
     </tr>
     {% endfor %}
 </table>

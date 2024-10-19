@@ -65,6 +65,9 @@ def view_events():
 @login_required
 @app.route('/')
 def hello():
+    if not current_user.is_authenticated:
+        return render_template("welcome.html", current_user=current_user)
+    
     if isinstance(current_user, AnonymousUserMixin):
         return render_template("home.html", available_times = [])
     
@@ -176,7 +179,7 @@ def login_page():
 @login_required
 def logout():
     logout_user()
-    return redirect('/login')
+    return redirect('/')
 
 @app.route('/templates')
 def template():
