@@ -5,7 +5,7 @@ import datetime
 
 def load_events_from_ics(calendar_name):
     events = []
-    with open(f'calendars/{calendar_name}', 'rb') as ics_file:
+    with open(f'uploads/{calendar_name}', 'rb') as ics_file:
         calendar = icalendar.Calendar.from_ical(ics_file.read())
     
     for index, event in enumerate(calendar.walk()):
@@ -64,6 +64,10 @@ def find_available_times(all_users_events_list, target_day):
 
     #compose list of all lists
     all_events = [item for sublist in all_users_events_on_day for item in sublist]
+
+    if len(all_events) == 0:
+        return []
+    
     all_events.reverse()
     all_events.sort(key=lambda x: x.start) # sort events by start time
     

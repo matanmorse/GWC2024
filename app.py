@@ -42,10 +42,11 @@ with app.app_context():
 calendar_name = "test.ics"
 target_day = datetime.date(2024, 10, 21)
 
+
+
 @login_required
 @app.route('/')
 def hello():
-
     if isinstance(current_user, AnonymousUserMixin):
         return render_template("home.html", available_times = [])
     
@@ -58,6 +59,7 @@ def hello():
         
     events_on_day = find_events_on_day(events_list, target_day)
     available_times = find_available_times([events_list], target_day)
+    
     return render_template("home.html", available_times = available_times )
 
 @app.route('/profile')
@@ -93,6 +95,41 @@ def signup_page():
     return render_template("signup.html")
 
 
+@app.route('/', methods=['POST'])
+def home_with_date():
+    # get the target day and update it
+    global target_day
+    selected_date = request.form['selectedDate']
+    date_split = selected_date.split('-')
+    target_date = date(int(date_split[0]), int(date_split[1]), int(date_split[2]))
+    target_day = target_date
+
+    # load the calendars of the 3 participants
+    participant1_email = request.form.get('participant1')
+    participant2_email = request.form.get('participant2')
+    participant3_email = request.form.get('participant3')
+
+    user1 = db.session.query(User).filter_by(email=participant1_email).first()
+    user2 = db.session.query(User).filter_by(email=participant2_email).first()
+    user3 = db.session.query(User).filter_by(email=participant3_email).first()
+
+    user1events = []
+    user2events = []
+    user3events = []
+
+    if user1:
+        if user1.calendar_filename:
+            user1events = load_events_from_ics(user1.calendar_filename)
+    if user2:
+        if user2.calendar_filename:
+            user2events = load_events_from_ics(user2.calendar_filename)
+    if user3:
+        if user3.calendar_filename:
+            user3events = load_events_from_ics(user3.calendar_filename)
+
+
+    return render_template("home.html", available_times=find_available_times([user1events, user2events, user3events], target_day))
+
 @app.route('/add_user', methods=['POST'])
 def add_user():
     password = request.form.get('password')  # Getting the 'name' field from the form
@@ -102,7 +139,6 @@ def add_user():
     db.session.commit()
     flask_login.login_user(new_user, remember=True)
 
-    print(email, password) 
     return redirect('/profile')
 
 @app.route('/login_user', methods=['POST'])

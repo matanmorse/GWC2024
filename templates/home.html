@@ -1,7 +1,29 @@
 {% extends "layout.html" %}
 
 {% block main %}
+<div class="container mt-5">
+    <form method="POST" action="/">
+        <div class="mb-3">
+            <label for="participant1" class="form-label">Invite up to 3 friends: </label>
+            <input type="email" class="form-control" id="participant1" name="participant1" required>
+          </div>
+          <div class="mb-3">
+            <input type="email" class="form-control" id="participant2" name="participant2">
+          </div>
+          <div class="mb-3">
+            <input type="email" class="form-control" id="participant3" name="participant3">
+          </div>
+        <div class="mb-3">
+            <label for="dateInput" class="form-label">Select a Date</label>
+            <input type="date" class="form-control" id="dateInput" value="2024-10-21" name="selectedDate">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
 {% for time in available_times %}
+
+
 
 <p>{{time.start}}, {{time.end}}</p>
 
