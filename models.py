@@ -1,5 +1,6 @@
 import json
 
+
 class Event:
     def __init__(self, start, end, name):
         self.name = name
@@ -21,3 +22,6 @@ class DateTimeRange:
 
     def __str__(self):
         return f"Start: {self.start.strftime('%I:%M %p')}, End: {self.end.strftime('%I:%M %p')}"
+    
+
+    
