@@ -25,11 +25,19 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    max-width: 100vw;
+    max-width: 40vw;
     max-height: 100vh;
     z-index: -1;
 }
-h1, h5 {
+h1 {
+    font-size: 50pt;
+    z-index: 10;
+    width: fit-content;
+    padding:1rem;
+    border-radius: 10%;
+
+}
+h5 {
     z-index: 10;
 }
 input {
@@ -39,4 +47,25 @@ input {
 button.submit {
     background-color: #71A8F8 !important;
     border-color: #71A8F8;
+}
+
+.person-image {
+    position:absolute;
+    height: 50vh;
+    top: 15vh;
+    right: 20vw;
+}
+
+.login-image {
+    position:absolute;
+    height: 50vh;
+    top: 30vh;
+    right: 15vw;
+}
+
+.bottom-right-butt {
+    position:absolute;
+    max-width:3 0vw;
+    bottom: 0;
+    right:0;
 }

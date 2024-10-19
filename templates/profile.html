@@ -1,10 +1,12 @@
 {% extends "layout.html" %}
+{% block title %}Profile- GetToGather{% endblock %}
 
 {% block main %}
 <h1>
     Welcome, {{current_user.email}}
 </h1>
 <div class="container">
+    <img src="/static/images/twobuttcircles.png" class="bottom-right-butt">
     <h2 class="mt-4">Upload your calendar to get started</h2>
     <form action="/upload_calendar" method="POST" enctype="multipart/form-data">
         <div class="mb-3">

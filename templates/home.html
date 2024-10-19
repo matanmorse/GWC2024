@@ -1,7 +1,10 @@
 {% extends "layout.html" %}
+{% block title %}Home- GetToGather{% endblock %}
 
 {% block main %}
-<div class="container mt-5">
+<img src="/static/images/twobuttcircles.png" class="bottom-right-butt">
+
+<div class="container mt-5 mb-5">
     <h6>Haven't uploaded a calendar yet? Go to your <a href="/profile">profile</a> to get started! </h6>
     <h3>Make a new event!</h3>
     <form method="POST" action="/">
@@ -23,9 +26,9 @@
     </form>
 </div>
 
-
+{% if available_times %}
 <h3>Times you are all available! </h3>
-<table class="table table-striped">
+<table class="table table-striped mb-5">
     <tr>
         <th scope="col">Start Time</th>
     </tr>
@@ -35,5 +38,5 @@
     </tr>
     {% endfor %}
 </table>
-
+{% endif %}
 {% endblock %}

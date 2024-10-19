@@ -1,7 +1,11 @@
 {% extends "layout.html" %}
+{% block title %}Login - GetToGather{% endblock %}
 
 {% block main %}
+
+
 <form action="/login_user" method="POST">
+    <img src="/static/images/undraw_authentication_re_svpt.svg" class="login-image">
     <h3>Welcome back!</h3>
     <div class="mb-3">
       <label for="email" class="form-label">Email address</label>
