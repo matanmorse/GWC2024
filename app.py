@@ -7,7 +7,7 @@ from parse_events import *
 import datetime
 from jinja2 import *
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, current_user, LoginManager, login_required, logout_user
+from flask_login import UserMixin, current_user, LoginManager, login_required, logout_user, AnonymousUserMixin
 import flask_login
 import os
 
@@ -42,16 +42,23 @@ with app.app_context():
 calendar_name = "test.ics"
 target_day = datetime.date(2024, 10, 21)
 
+@login_required
 @app.route('/')
 def hello():
-    # get the calendar file for this user
+
+    if isinstance(current_user, AnonymousUserMixin):
+        return render_template("home.html", available_times = [])
+    
     calendar_name = current_user.calendar_filename
 
+    if not calendar_name:
+        return render_template("home.html", available_times = [])
+    
     events_list = load_events_from_ics(calendar_name)
         
     events_on_day = find_events_on_day(events_list, target_day)
     # available_times = find_available_times([events_list], target_day)
-    return render_template("layout.html", available_times = events_list)
+    return render_template("home.html", available_times = events_list)
 
 @app.route('/profile')
 @login_required
@@ -69,7 +76,6 @@ def upload_file():
         return "No selected file", 400
 
     
-    print(file.filename.split('.')[-1].lower())
     if file and file.filename.split('.')[-1].lower() == "ics":
         filename = file.filename
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
