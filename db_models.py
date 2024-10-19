@@ -7,7 +7,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True)
     hash = db.Column(db.String(100))
     admin = db.Column(db.Boolean)
-
+    calendar_filename = db.Column(db.String(100))
+    
     def is_admin(self):
          return self.admin
 

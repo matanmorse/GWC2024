@@ -1,6 +1,7 @@
 import icalendar
 from models import Event, DateTimeRange
-from datetime import time
+from datetime import time, date
+import datetime
 
 def load_events_from_ics(calendar_name):
     events = []
@@ -13,11 +14,27 @@ def load_events_from_ics(calendar_name):
             continue
         
         start = event.get('dtstart').dt
-        start = start.replace(hour=start.hour-4)
         end = event.get('dtend').dt
-        end = end.replace(hour=end.hour - 4)
-       
+
+        
+        rrule = (event.get('rrule'))
+
+        if rrule:
+            continue
+
+        defaultTime = time(10, 0, 0)
+        if isinstance(start, date) and not isinstance(start, datetime.datetime):
+                # Convert to datetime by adding a default time (e.g., 00:00)
+                start = datetime.datetime.combine(start, defaultTime)  
+
+        if isinstance(end, date) and not isinstance(end, datetime.datetime):
+                end = datetime.datetime.combine(end, defaultTime)  
+
+        end = end.replace(hour=(max(end.hour - 4, 0)))
+        start = start.replace(hour=(max(start.hour - 4, 0)))
+        
         parsed_event = Event(start, end, summary)
+        print("appending")
         events.append(parsed_event)
     
     return events
@@ -42,6 +59,7 @@ def find_events_on_day(events_list, date):
 def find_available_times(all_users_events_list, target_day):
     all_users_events_on_day = []
     available_times = []
+
     for event_list in all_users_events_list:
         all_users_events_on_day.append(find_events_on_day(event_list, target_day))
 
@@ -50,6 +68,7 @@ def find_available_times(all_users_events_list, target_day):
     all_events.reverse()
     all_events.sort(key=lambda x: x.start) # sort events by start time
     
+    print(len(all_events))
     if (all_events[0].start.time() > time(0,0,0)):
         available_times.append(DateTimeRange(time(0,0,0), all_events[0].start.time()))
     

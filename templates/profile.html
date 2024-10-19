@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container">
+    <h2 class="mt-4">Upload a File</h2>
+    <form action="/upload_calendar" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="file" class="form-label">Choose a file:</label>
+            <input class="form-control" type="file" name="file" id="file">
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+</div>
+
+{% endblock %}
