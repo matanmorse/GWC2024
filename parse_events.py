@@ -34,7 +34,6 @@ def load_events_from_ics(calendar_name):
         start = start.replace(hour=(max(start.hour - 4, 0)))
         
         parsed_event = Event(start, end, summary)
-        print("appending")
         events.append(parsed_event)
     
     return events
@@ -68,7 +67,6 @@ def find_available_times(all_users_events_list, target_day):
     all_events.reverse()
     all_events.sort(key=lambda x: x.start) # sort events by start time
     
-    print(len(all_events))
     if (all_events[0].start.time() > time(0,0,0)):
         available_times.append(DateTimeRange(time(0,0,0), all_events[0].start.time()))
     
@@ -82,5 +80,4 @@ def find_available_times(all_users_events_list, target_day):
         if (current_event.end < next_event.start): #this is a free time
             available_times.append(DateTimeRange(current_event.end.time(), next_event.start.time()))
     
-    print([str(item) for item in available_times])
 

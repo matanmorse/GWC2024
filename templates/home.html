@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block main %}
+{% for event in available_times %}
+
+<p>{{event.name}}</p>
+
+{% endfor %}
+{% endblock %}
