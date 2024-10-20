@@ -1,5 +1,5 @@
 # Get-To-Gather 
-A schedule management app for the *Girls Hoo Hack Hackathon 2024
+A schedule management app for the Girls Hoo Hack Hackathon 2024
 
 ## Contributors
 * Rakshitha Thanasekaran
